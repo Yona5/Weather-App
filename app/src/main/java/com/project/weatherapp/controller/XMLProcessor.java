@@ -17,16 +17,16 @@ public class XMLProcessor {
     }
 
     public Weather process() throws XmlPullParserException, IOException {
-        ArrayList<HashMap<String, String>> weatherList;
-        HashMap<String, String> weatherHash;
-        String tag, text = "no data";
+        ArrayList<HashMap<String, String>> weatherList = new ArrayList<>();
+        HashMap<String, String> weatherHash = new HashMap<>();
+        String tag, text = "no data", location = "";
         int event = xmlPullParser.getEventType();
 
         while (event != XmlPullParser.END_DOCUMENT) {
             tag = xmlPullParser.getName();
             switch (event) {
                 case XmlPullParser.START_TAG:
-                    if (tag.equalsIgnoreCase("channel")) {
+                    if (tag.equalsIgnoreCase("item")) {
                         weatherHash = new HashMap<>();
                     }
                     break;
@@ -35,12 +35,23 @@ public class XMLProcessor {
                     break;
                 case XmlPullParser.END_TAG:
                     switch (tag){
-                        case "channel":
-                            case "title":
-                                System.out.println("============");
-                                System.out.println(text);
-//                        break;
-                        return null;
+                        case "title":
+                            weatherHash.put("title", text);
+                            if(location.isEmpty()){
+                                location = text;
+                            }
+                            break;
+                        case "description": weatherHash.put("description",text);
+                            System.out.println("============");
+                            System.out.println(text);
+                            break;
+                        case "dc:date": weatherHash.put("date", text);
+                            break;
+                        case "item":
+                            if(weatherHash != null){
+                                weatherHash.put("location", location);
+                                weatherList.add(weatherHash);
+                            }
                     }
             }
             event = xmlPullParser.next();
