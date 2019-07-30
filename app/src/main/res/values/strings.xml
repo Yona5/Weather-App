@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">WeatherApp</string>
-    <string name="location_name">Placeholder</string>
-    <string name="date_time">date</string>
-    <string name="weather">Weather</string>
+    <string name="location_name">Port Louis, Mauritius</string>
+    <string name="date_time">Monday, 6:00 AM</string>
+    <string name="weather">Storm</string>
     <string name="temperature">20</string>
+    <string name="max_temp">Max: 25 C</string>
+    <string name="min_temp">Min: 15 C</string>
+    <string name="key">Humidity</string>
+    <string name="value">87%</string>
 </resources>

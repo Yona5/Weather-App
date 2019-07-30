@@ -3,17 +3,18 @@ package com.project.weatherapp.controller;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
-
+import android.util.Log;
 import com.project.weatherapp.model.Weather;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-public class XMLParser extends AsyncTask<Void, Void, Weather> {
+public class XMLParser extends AsyncTask<Void, Void, XmlPullParser> {
 
     public interface asyncResponse{
         void finalResponse(Weather weather);
@@ -29,48 +30,44 @@ public class XMLParser extends AsyncTask<Void, Void, Weather> {
         assetManager = context.getAssets();
     }
 
-    public void parse() throws XmlPullParserException, IOException {
-        XmlPullParserFactory xmlPullParserFactory = XmlPullParserFactory.newInstance();
-        XmlPullParser xmlPullParser = xmlPullParserFactory.newPullParser();
-        InputStream inputStream = assetManager.open("glasgow.xml");
-        xmlPullParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-        xmlPullParser.setInput(inputStream, null);
-
-        String tag, text = "no data";
-        int event = xmlPullParser.getEventType();
-
-        while (event != XmlPullParser.END_DOCUMENT) {
-            tag = xmlPullParser.getName();
-            switch (event) {
-                case XmlPullParser.START_TAG:
-                    if (tag.equals("title")) {
-
-                    }
-                    break;
-                case XmlPullParser.TEXT:
-                    text = xmlPullParser.getText();
-//                    System.out.println("============");
-//                    System.out.println(text);
-                    break;
-                case XmlPullParser.END_TAG:
-                    switch (tag){
-                        case "title":
-                            System.out.println("============");
-                            System.out.println(text);
-                            break;
-                    }
-            }
-            event = xmlPullParser.next();
-        }
-    }
 
     @Override
-    protected Weather doInBackground(Void... voids) {
+    protected XmlPullParser doInBackground(Void... voids) {
+        String urlStrg = "https://weather-broker-cdn.api.bbci.co.uk/en/forecast/rss/3day/1545752";
+
+        try{
+            URL url = new URL(urlStrg);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setDoInput(true);
+            httpURLConnection.connect();
+            InputStream inputStream = httpURLConnection.getInputStream();
+            httpURLConnection.disconnect();
+
+            XmlPullParserFactory xmlPullParserFactory = XmlPullParserFactory.newInstance();
+            XmlPullParser xmlPullParser = xmlPullParserFactory.newPullParser();
+
+            xmlPullParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            xmlPullParser.setInput(inputStream, null);
+
+            return xmlPullParser;
+
+        }catch(Exception ex){
+            Log.e("app", "exception", ex);
+        }
         return null;
     }
     @Override
-    protected void onPostExecute(Weather weather){
-        this.delegate.finalResponse(weather);
+    protected void onPostExecute(XmlPullParser xmlPullParser){
+        XMLProcessor xmlProcessor = new XMLProcessor(xmlPullParser);
+        try {
+            xmlProcessor.process();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        this.delegate.finalResponse(weather);
     }
 }
 

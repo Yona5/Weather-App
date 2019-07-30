@@ -15,13 +15,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout);
-        XMLParser xmlParser = new XMLParser(this);
         try {
-            xmlParser.parse();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            this.getSupportActionBar().hide();
+        }catch (NullPointerException ex){
+
         }
+
+        XMLParser xmlParser = new XMLParser(this);
+        xmlParser.execute();
     }
 }
