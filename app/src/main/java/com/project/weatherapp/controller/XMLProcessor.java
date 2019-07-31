@@ -16,10 +16,10 @@ public class XMLProcessor {
         this.xmlPullParser = xmlPullParser;
     }
 
-    public Weather process() throws XmlPullParserException, IOException {
+    public ArrayList<Weather> process() throws XmlPullParserException, IOException {
         ArrayList<HashMap<String, String>> weatherList = new ArrayList<>();
         HashMap<String, String> weatherHash = new HashMap<>();
-        String tag, text = "no data", location = "";
+        String tag, text = "no data", location = "", avatar = "";
         int event = xmlPullParser.getEventType();
 
         while (event != XmlPullParser.END_DOCUMENT) {
@@ -34,21 +34,22 @@ public class XMLProcessor {
                     text = xmlPullParser.getText();
                     break;
                 case XmlPullParser.END_TAG:
-                    switch (tag){
+                    switch (tag) {
                         case "title":
                             weatherHash.put("title", text);
-                            if(location.isEmpty()){
+                            if (location.isEmpty()) {
                                 location = text;
                             }
                             break;
-                        case "description": weatherHash.put("description",text);
-                            System.out.println("============");
-                            System.out.println(text);
+                        case "url" : avatar = text;
+                            break;
+                        case "description": weatherHash.put("description", text);
                             break;
                         case "dc:date": weatherHash.put("date", text);
                             break;
                         case "item":
-                            if(weatherHash != null){
+                            if (weatherHash != null) {
+                                weatherHash.put("avatar",avatar);
                                 weatherHash.put("location", location);
                                 weatherList.add(weatherHash);
                             }
@@ -56,7 +57,7 @@ public class XMLProcessor {
             }
             event = xmlPullParser.next();
         }
-        ModelMaker modelMaker = new ModelMaker();
-        return  null;
+        ModelMaker modelMaker = new ModelMaker(weatherList);
+        return modelMaker.mold();
     }
 }

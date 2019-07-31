@@ -6,35 +6,49 @@ public class Weather {
     //location (country)
     String location;
     // day of the week and date, temperature, wind speed, likelihood of rain
-    double max_temp;
-    double min_temp;
-    double wind_speed;
+    String max_temp;
+    String min_temp;
+    String wind_speed;
     String weather;
-    Date date;
+    String avatar;
+    String day;
+
+
+    String date;
     // wind direction, visibility, pressure, humidity, UV risk, pollution
     String wind_direction;
     String visibility;
-    double pressure;
-    double UV_risk;
-    String pollution;
+    String humidity;
+    String pressure;
+    String UV_risk;
 
     public Weather() {
     }
 
-    public Weather(String location, double max_temp, double min_temp, double wind_speed,
-                   String weather, Date date, String wind_direction, String visibility,
-                   double pressure, double UV_risk, String pollution) {
+    public Weather(String location, String max_temp, String min_temp, String wind_speed,
+                   String weather, String avatar, String date, String wind_direction,
+                   String visibility, String humidity, String pressure, String UV_risk, String day){
         this.location = location;
         this.max_temp = max_temp;
         this.min_temp = min_temp;
         this.wind_speed = wind_speed;
         this.weather = weather;
+        this.avatar = avatar;
         this.date = date;
         this.wind_direction = wind_direction;
         this.visibility = visibility;
+        this.humidity = humidity;
         this.pressure = pressure;
         this.UV_risk = UV_risk;
-        this.pollution = pollution;
+        this.day = day;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 
     public String getLocation() {
@@ -45,27 +59,27 @@ public class Weather {
         this.location = location;
     }
 
-    public double getMax_temp() {
+    public String getMax_temp() {
         return max_temp;
     }
 
-    public void setMax_temp(double max_temp) {
+    public void setMax_temp(String max_temp) {
         this.max_temp = max_temp;
     }
 
-    public double getMin_temp() {
+    public String getMin_temp() {
         return min_temp;
     }
 
-    public void setMin_temp(double min_temp) {
+    public void setMin_temp(String min_temp) {
         this.min_temp = min_temp;
     }
 
-    public double getWind_speed() {
+    public String getWind_speed() {
         return wind_speed;
     }
 
-    public void setWind_speed(double wind_speed) {
+    public void setWind_speed(String wind_speed) {
         this.wind_speed = wind_speed;
     }
 
@@ -77,11 +91,19 @@ public class Weather {
         this.weather = weather;
     }
 
-    public Date getDate() {
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -101,27 +123,27 @@ public class Weather {
         this.visibility = visibility;
     }
 
-    public double getPressure() {
+    public String getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(String humidity) {
+        this.humidity = humidity;
+    }
+
+    public String getPressure() {
         return pressure;
     }
 
-    public void setPressure(double pressure) {
+    public void setPressure(String pressure) {
         this.pressure = pressure;
     }
 
-    public double getUV_risk() {
+    public String getUV_risk() {
         return UV_risk;
     }
 
-    public void setUV_risk(double UV_risk) {
+    public void setUV_risk(String UV_risk) {
         this.UV_risk = UV_risk;
-    }
-
-    public String getPollution() {
-        return pollution;
-    }
-
-    public void setPollution(String pollution) {
-        this.pollution = pollution;
     }
 }
