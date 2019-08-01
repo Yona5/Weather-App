@@ -3,13 +3,18 @@ package com.project.weatherapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.project.weatherapp.controller.XMLParser;
 import com.project.weatherapp.model.Weather;
@@ -28,6 +33,9 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
     private ArrayList<Weather> weatherArrayList1 = new ArrayList<>();
     private ArrayList<Weather> weatherArrayList2 = new ArrayList<>();
     private ArrayList<Weather> weatherArrayList3 = new ArrayList<>();
+
+    BottomNavigationView navigationView;
+
     private String urlStrg = "https://weather-broker-cdn.api.bbci.co.uk/en/forecast/rss/3day/";
     String [] paths = {"2648579", "2643743", "5128581", "287286", "934154", "1185241", "344979"};
     private int counter = 0;
@@ -66,7 +74,10 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
             ex.printStackTrace();
         }
         counter++;
-        if(counter == paths.length) createView(weatherArrayList1);
+        if(counter == paths.length) {
+            createView(weatherArrayList1);
+            nextNavView();
+        }
     }
 
     public void createView(ArrayList<Weather> weathers){
@@ -77,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
             this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    nextView();
+                    nextView(position);
                 }
             });
         }catch (Exception ex){
@@ -85,10 +96,33 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
         }
     }
 
-    public void nextView(){
+    public void nextView(int position){
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtra("details", weatherArrayList1);
+        intent.putExtra("position", position);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
+    }
+
+    public void nextNavView(){
+        navigationView = findViewById(R.id.bottomNavigationView);
+        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.today:
+                        createView(weatherArrayList1);
+                        findViewById(R.id.today);
+                        break;
+                    case R.id.tomorrow:
+                        createView(weatherArrayList2);
+                        break;
+                    case R.id.the_day_after:
+                        createView(weatherArrayList3);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 }

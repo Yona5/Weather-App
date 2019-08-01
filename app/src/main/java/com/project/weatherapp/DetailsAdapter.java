@@ -14,12 +14,12 @@ import com.project.weatherapp.model.Weather;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsAdapter extends ArrayAdapter<Weather> {
+public class DetailsAdapter extends ArrayAdapter<String> {
 
     private Context context;
-    private List<Weather> weatherList;
+    private List<String> weatherList;
 
-    public DetailsAdapter(@NonNull Context context, ArrayList<Weather> weatherList){
+    public DetailsAdapter(@NonNull Context context, ArrayList<String> weatherList){
         super(context, 0, weatherList);
         this.context = context;
         this.weatherList = weatherList;
@@ -33,11 +33,11 @@ public class DetailsAdapter extends ArrayAdapter<Weather> {
                 listItem = LayoutInflater.from(this.context).inflate(R.layout.details_layout, parent, false);
             }
 
-            Weather current_weather = weatherList.get(position);
+            String current_weather = weatherList.get(position);
 
-            TextView key = listItem.findViewById(R.id.key);
+            TextView value = listItem.findViewById(R.id.value);
 
-            key.setText(current_weather.getHumidity());
+            value.setText(current_weather);
 
         }catch(Exception ex){
             ex.printStackTrace();

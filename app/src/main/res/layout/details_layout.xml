@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/detail_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginStart="34dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,11 +21,11 @@
         android:id="@+id/key"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
+        android:layout_marginStart="32dp"
         android:fontFamily="@font/roboto"
         android:text="@string/key"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/value"
         app:layout_constraintStart_toEndOf="@+id/detail_icon" />
 
@@ -33,11 +33,12 @@
         android:id="@+id/value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
+        android:layout_marginStart="32dp"
         android:text="@string/value"
         android:textColor="#000000"
-        android:textSize="40sp"
+        android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/detail_icon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.514" />
 </android.support.constraint.ConstraintLayout>

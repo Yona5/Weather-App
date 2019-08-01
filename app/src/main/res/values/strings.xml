@@ -6,6 +6,9 @@
     <string name="temperature">20</string>
     <string name="max_temp">Max: 25 C</string>
     <string name="min_temp">Min: 15 C</string>
-    <string name="key">Humidity</string>
-    <string name="value">87%</string>
+    <string name="key">Key</string>
+    <string name="value">Value</string>
+    <string name="today">today</string>
+    <string name="tomorrow">tomorrow</string>
+    <string name="the_day_after">day_after</string>
 </resources>
