@@ -1,15 +1,16 @@
 package com.project.weatherapp;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.project.weatherapp.model.Weather;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class DetailsAdapter extends ArrayAdapter<String> {
         super(context, 0, weatherList);
         this.context = context;
         this.weatherList = weatherList;
+
     }
     @NonNull
     @Override
@@ -34,9 +36,18 @@ public class DetailsAdapter extends ArrayAdapter<String> {
             }
 
             String current_weather = weatherList.get(position);
+            String [] keyList = {"Pressure", "Humidity", "UV Risk", "Visibility", "Wind Direction", "Wind Speed"};
 
+            TextView key = listItem.findViewById(R.id.key);
             TextView value = listItem.findViewById(R.id.value);
+            ImageView imageView = listItem.findViewById(R.id.detail_icon);
+            Drawable drawable;
 
+            if(position <= keyList.length){
+                key.setText(keyList[position]);
+//                imageView.setImageResource(R.drawable);
+
+            }
             value.setText(current_weather);
 
         }catch(Exception ex){
