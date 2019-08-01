@@ -1,10 +1,14 @@
 package com.project.weatherapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.project.weatherapp.controller.XMLParser;
@@ -64,8 +68,20 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
     }
 
     public void createView(ArrayList<Weather> weathers){
-        this.listView = findViewById(R.id.weather_list);
-        this.weatherAdapter = new WeatherAdapter(this, weathers);
-        this.listView.setAdapter(weatherAdapter);
+        try{
+            this.listView = findViewById(R.id.weather_list);
+            this.weatherAdapter = new WeatherAdapter(this, weathers);
+            this.listView.setAdapter(weatherAdapter);
+            this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent();
+                    
+                }
+            });
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
+
 }

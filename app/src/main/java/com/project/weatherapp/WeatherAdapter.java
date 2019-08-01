@@ -36,9 +36,13 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
             TextView weather_pre = listItem.findViewById(R.id.weather);
             TextView location = listItem.findViewById(R.id.locationName);
             TextView temperature = listItem.findViewById(R.id.temperature);
+            TextView max_temp = listItem.findViewById(R.id.max_temp);
+            TextView min_temp = listItem.findViewById(R.id.min_temp);
 
             weather_pre.setText(current_weather.getWeather());
             location.setText(current_weather.getLocation());
+            max_temp.setText(current_weather.getMax_temp() + "°" + " C");
+            min_temp.setText(current_weather.getMin_temp() + "°" + " C");
         }catch(Exception ex){
             ex.printStackTrace();
         }
