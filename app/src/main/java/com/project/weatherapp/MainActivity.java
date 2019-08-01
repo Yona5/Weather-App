@@ -19,6 +19,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.security.auth.Destroyable;
+
 public class MainActivity extends AppCompatActivity implements XMLParser.AsyncResponse{
 
     private ListView listView;
@@ -75,8 +77,7 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
             this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent();
-                    
+                    nextView();
                 }
             });
         }catch (Exception ex){
@@ -84,4 +85,10 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
         }
     }
 
+    public void nextView(){
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra("details", weatherArrayList1);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
+    }
 }

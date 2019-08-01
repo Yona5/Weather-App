@@ -1,8 +1,8 @@
 package com.project.weatherapp.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class Weather {
+public class Weather implements Serializable {
     //location (country)
     String location;
     // day of the week and date, temperature, wind speed, likelihood of rain
