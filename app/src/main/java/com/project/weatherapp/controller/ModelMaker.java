@@ -40,7 +40,7 @@ public class ModelMaker {
                 String date =  weatherHash.get("date").split("T")[0];
 
                 weather.setLocation(location.trim());
-                weather.setLocation(avatar.trim());
+                weather.setAvatar(avatar.trim());
                 weather.setMax_temp(max_temp.trim());
                 weather.setMin_temp(min_temp.trim());
                 weather.setWind_direction(wind_direction.trim());

@@ -1,40 +1,35 @@
 package com.project.weatherapp.controller;
 
-import android.content.Context;
-import android.content.res.AssetManager;
+
 import android.os.AsyncTask;
 import android.util.Log;
 import com.project.weatherapp.model.Weather;
 import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class XMLParser extends AsyncTask<Void, Void, XmlPullParser> {
 
-    public interface asyncResponse{
-        void finalResponse(Weather weather);
+    public interface AsyncResponse{
+        void finalResponse(ArrayList<Weather> weatherList);
     }
 
-    public XMLParser.asyncResponse delegate;
-    public XMLParser(XMLParser.asyncResponse delegate){
+    public AsyncResponse delegate;
+    private String urlStrng;
+
+    public XMLParser(AsyncResponse delegate, String urlStrg){
         this.delegate = delegate;
+        this.urlStrng = urlStrg;
     }
-
-    AssetManager assetManager;
-    public XMLParser(Context context) {
-        assetManager = context.getAssets();
-    }
-
 
     @Override
     protected XmlPullParser doInBackground(Void... voids) {
-        String urlStrg = "https://weather-broker-cdn.api.bbci.co.uk/en/forecast/rss/3day/1545752";
-
+        String urlStrg = this.urlStrng;
         try{
             URL url = new URL(urlStrg);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -61,13 +56,11 @@ public class XMLParser extends AsyncTask<Void, Void, XmlPullParser> {
     protected void onPostExecute(XmlPullParser xmlPullParser){
         XMLProcessor xmlProcessor = new XMLProcessor(xmlPullParser);
         try {
-            xmlProcessor.process();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            ArrayList<Weather> weathers = xmlProcessor.process();
+            this.delegate.finalResponse(weathers);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-//        this.delegate.finalResponse(weather);
     }
 }
 

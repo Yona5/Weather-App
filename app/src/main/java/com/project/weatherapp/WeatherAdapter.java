@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.project.weatherapp.model.Weather;
 
@@ -20,18 +21,27 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
 
     public WeatherAdapter(@NonNull Context context, ArrayList<Weather> weatherList){
         super(context, 0, weatherList);
+        this.context = context;
+        this.weatherList = weatherList;
     }
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @Nullable ViewGroup parent){
         View listItem = view;
-        if (listItem == null)
-            listItem = LayoutInflater.from(this.context).inflate(R.layout.layout, parent, false);
+        try{
+            if (listItem == null){
+                listItem = LayoutInflater.from(this.context).inflate(R.layout.layout, parent, false);
+            }
+            Weather current_weather = weatherList.get(position);
+            TextView weather_pre = listItem.findViewById(R.id.weather);
+            TextView location = listItem.findViewById(R.id.locationName);
+            TextView temperature = listItem.findViewById(R.id.temperature);
 
-
-
-
-
+            weather_pre.setText(current_weather.getWeather());
+            location.setText(current_weather.getLocation());
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
         return listItem;
     }
 }
