@@ -1,6 +1,7 @@
 package com.project.weatherapp;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -41,7 +42,7 @@ public class DetailsAdapter extends ArrayAdapter<String> {
             TextView key = listItem.findViewById(R.id.key);
             TextView value = listItem.findViewById(R.id.value);
             ImageView imageView = listItem.findViewById(R.id.detail_icon);
-            Drawable drawable;
+
 
             if(position <= keyList.length){
                 key.setText(keyList[position]);
