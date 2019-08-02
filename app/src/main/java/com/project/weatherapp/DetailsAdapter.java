@@ -46,8 +46,20 @@ public class DetailsAdapter extends ArrayAdapter<String> {
 
             if(position <= keyList.length){
                 key.setText(keyList[position]);
-//                imageView.setImageResource(R.drawable);
-
+                switch (keyList[position]){
+                    case "Pressure": imageView.setImageResource(R.drawable.pressure);
+                        break;
+                    case "Humidity": imageView.setImageResource(R.drawable.wet);
+                        break;
+                    case "UV Risk": imageView.setImageResource(R.drawable.restrict);
+                        break;
+                    case "Visibility": imageView.setImageResource(R.drawable.eye);
+                        break;
+                    case "Wind Direction": imageView.setImageResource(R.drawable.wind_gauge);
+                        break;
+                    case "Wind Speed": imageView.setImageResource(R.drawable.wind_speed);
+                        break;
+                }
             }
             value.setText(current_weather);
 

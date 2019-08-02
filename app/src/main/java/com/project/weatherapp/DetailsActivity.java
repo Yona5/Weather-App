@@ -1,14 +1,17 @@
 package com.project.weatherapp;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.project.weatherapp.model.Weather;
 
 import java.util.ArrayList;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends Activity {
 
     private ArrayList<Weather> weathers = new ArrayList<>();
     private ArrayList<String> details = new ArrayList<>();
@@ -20,7 +23,12 @@ public class DetailsActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.details);
+
         Bundle extra = getIntent().getExtras();
         if(extra != null) {
             this.weathers = (ArrayList<Weather>) extra.get("details");
