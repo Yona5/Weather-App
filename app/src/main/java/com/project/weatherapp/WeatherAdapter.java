@@ -55,7 +55,6 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
 //            Picasso.get().load(current_weather.getAvatar()).into(avatar);
 
             String weather = current_weather.getWeather().toLowerCase();
-            System.out.println(weather);
             if(weather.contains("sunny")){
                 avatar.setImageResource(R.drawable.weather_sunny);
                 layout.setBackground(getContext().getDrawable(R.drawable.bg_color_hot));

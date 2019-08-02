@@ -75,12 +75,12 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
         }
         counter++;
         if(counter == paths.length) {
-            createView(weatherArrayList1);
+            createListView(weatherArrayList1);
             nextNavView();
         }
     }
 
-    public void createView(ArrayList<Weather> weathers){
+    public void createListView(final ArrayList<Weather> weathers){
         try{
             this.listView = findViewById(R.id.weather_list);
             this.weatherAdapter = new WeatherAdapter(this, weathers);
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
             this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    nextView(position);
+                    goToDetailsView(position, weathers);
                 }
             });
         }catch (Exception ex){
@@ -96,9 +96,9 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
         }
     }
 
-    public void nextView(int position){
+    public void goToDetailsView(int position, ArrayList<Weather> weathers){
         Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra("details", weatherArrayList1);
+        intent.putExtra("details", weathers);
         intent.putExtra("position", position);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
@@ -111,14 +111,14 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.today:
-                        createView(weatherArrayList1);
+                        createListView(weatherArrayList1);
                         findViewById(R.id.today);
                         break;
                     case R.id.tomorrow:
-                        createView(weatherArrayList2);
+                        createListView(weatherArrayList2);
                         break;
                     case R.id.the_day_after:
-                        createView(weatherArrayList3);
+                        createListView(weatherArrayList3);
                         break;
                 }
                 return true;
