@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
                     goToDetailsView(position, weathers);
                 }
             });
+
         }catch (Exception ex){
             ex.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package com.project.weatherapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Layout;
@@ -36,7 +37,9 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
             if (listItem == null){
                 listItem = LayoutInflater.from(this.context).inflate(R.layout.layout, parent, false);
             }
-            Weather current_weather = weatherList.get(position);
+
+            Weather current_weather = getItem(position);
+
             TextView weather_pre = listItem.findViewById(R.id.weather);
             TextView location = listItem.findViewById(R.id.locationName);
             TextView temperature = listItem.findViewById(R.id.temperature);
@@ -108,5 +111,13 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
             ex.printStackTrace();
         }
         return listItem;
+    }
+    @Override
+    public int getCount(){
+        return Integer.MAX_VALUE;
+    }
+    @Override
+    public Weather getItem(int position) {
+        return weatherList.get(position % weatherList.size());
     }
 }

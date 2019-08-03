@@ -41,7 +41,6 @@ public class DetailsActivity extends Activity {
     public void populate(int position){
         try{
             details.add(weathers.get(position).getPressure());
-//            details.add(weathers.get(position).getAvatar());
             details.add(weathers.get(position).getHumidity());
             details.add(weathers.get(position).getUV_risk());
             details.add(weathers.get(position).getVisibility());
