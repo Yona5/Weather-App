@@ -1,39 +1,44 @@
 package com.project.weatherapp;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
+
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationMenuView;
+
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AbsListView;
+
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
+
 
 import com.project.weatherapp.controller.XMLParser;
 import com.project.weatherapp.model.Weather;
-
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.security.auth.Destroyable;
 
-public class MainActivity extends AppCompatActivity implements XMLParser.AsyncResponse{
+public class MainActivity extends AppCompatActivity implements XMLParser.AsyncResponse, View.OnClickListener{
 
     private ListView listView;
     private WeatherAdapter weatherAdapter;
+    private Menu menu;
     private ArrayList<Weather> weatherArrayList1 = new ArrayList<>();
     private ArrayList<Weather> weatherArrayList2 = new ArrayList<>();
     private ArrayList<Weather> weatherArrayList3 = new ArrayList<>();
+    private DrawerLayout drawerLayout;
+    private NavigationView navView;
+
 
     BottomNavigationView navigationView;
 
@@ -108,23 +113,51 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
 
     public void nextNavView(){
         navigationView = findViewById(R.id.bottomNavigationView);
+
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.today:
                         createListView(weatherArrayList1);
-                        findViewById(R.id.today);
+                        menuItem.setTitle(weatherArrayList1.get(0).getDay());
                         break;
                     case R.id.tomorrow:
                         createListView(weatherArrayList2);
+                        menuItem.setTitle(weatherArrayList2.get(0).getDay());
                         break;
                     case R.id.the_day_after:
                         createListView(weatherArrayList3);
+                        menuItem.setTitle(weatherArrayList3.get(0).getDay());
                         break;
                 }
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onClick(View view){
+        if(view.getId() == R.id.menu){
+
+            drawerLayout = findViewById(R.id.activity_main);
+            drawerLayout.openDrawer(Gravity.START);
+            navView = findViewById(R.id.nv);
+
+            navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    int id = menuItem.getItemId();
+                    switch(id)
+                    {
+                        case R.id.today:
+                            Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();break;
+                        default:
+                            return true;
+                    }
+                    return true;
+                }
+            });
+        }
     }
 }

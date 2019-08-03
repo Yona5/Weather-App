@@ -14,7 +14,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.project.weatherapp.model.Weather;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 import java.util.List;

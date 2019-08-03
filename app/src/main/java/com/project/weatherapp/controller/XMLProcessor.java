@@ -57,7 +57,6 @@ public class XMLProcessor {
             }
             event = xmlPullParser.next();
         }
-        ModelMaker modelMaker = new ModelMaker(weatherList);
-        return modelMaker.mold();
+        return new ModelMaker(weatherList).mold();
     }
 }
