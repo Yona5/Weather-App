@@ -1,5 +1,6 @@
 package com.project.weatherapp;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 
 import android.support.annotation.NonNull;
@@ -20,27 +21,28 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 
 import com.project.weatherapp.controller.XMLParser;
 import com.project.weatherapp.model.Weather;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity implements XMLParser.AsyncResponse, View.OnClickListener{
 
     private ListView listView;
     private WeatherAdapter weatherAdapter;
-    private Menu menu;
     private ArrayList<Weather> weatherArrayList1 = new ArrayList<>();
     private ArrayList<Weather> weatherArrayList2 = new ArrayList<>();
     private ArrayList<Weather> weatherArrayList3 = new ArrayList<>();
     private DrawerLayout drawerLayout;
     private NavigationView navView;
-
-
-    BottomNavigationView navigationView;
+    private Bundle bundle;
+    private BottomNavigationView navigationView;
+    private TimePickerDialog timePickerDialog;
 
     private String urlStrg = "https://weather-broker-cdn.api.bbci.co.uk/en/forecast/rss/3day/";
     String [] paths = {"2648579", "2643743", "5128581", "287286", "934154", "1185241", "344979"};
@@ -48,23 +50,31 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        if(counter == 0){
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            setContentView(R.layout.activity_main);
 
-        setContentView(R.layout.activity_main);
-
-        try {
-            this.getSupportActionBar().hide();
-        }catch (NullPointerException ex){
-            ex.printStackTrace();
+            try {
+                this.getSupportActionBar().hide();
+            }catch (NullPointerException ex){
+                ex.printStackTrace();
+            }
         }
 
-        for(int i = 0; i < paths.length; i++){
-            XMLParser xmlParser = new XMLParser(this, urlStrg+paths[i]);
+        this.bundle = savedInstanceState;
+
+        if(counter == 0){
+            XMLParser xmlParser = new XMLParser(this, urlStrg+paths[0]);
             xmlParser.execute();
+        }else{
+            for(int i = 1; i < paths.length; i++){
+                XMLParser xmlParser = new XMLParser(this, urlStrg+paths[i]);
+                xmlParser.execute();
+            }
         }
     }
 
@@ -80,7 +90,11 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
             ex.printStackTrace();
         }
         counter++;
-        if(counter == paths.length) {
+        if(counter == 1) {
+            createListView(weatherArrayList1);
+            nextNavView();
+            onCreate(bundle);
+        }else if(counter == paths.length){
             createListView(weatherArrayList1);
             nextNavView();
         }
@@ -113,22 +127,22 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
 
     public void nextNavView(){
         navigationView = findViewById(R.id.bottomNavigationView);
-
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.today).setTitle(weatherArrayList1.get(0).getDay());
+        menu.findItem(R.id.tomorrow).setTitle(weatherArrayList2.get(0).getDay());
+        menu.findItem(R.id.the_day_after).setTitle(weatherArrayList3.get(0).getDay());
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.today:
                         createListView(weatherArrayList1);
-                        menuItem.setTitle(weatherArrayList1.get(0).getDay());
                         break;
                     case R.id.tomorrow:
                         createListView(weatherArrayList2);
-                        menuItem.setTitle(weatherArrayList2.get(0).getDay());
                         break;
                     case R.id.the_day_after:
                         createListView(weatherArrayList3);
-                        menuItem.setTitle(weatherArrayList3.get(0).getDay());
                         break;
                 }
                 return true;
@@ -147,11 +161,22 @@ public class MainActivity extends AppCompatActivity implements XMLParser.AsyncRe
             navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    final Calendar calendar = Calendar.getInstance();
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                    int minute = calendar.get(Calendar.MINUTE);
+
                     int id = menuItem.getItemId();
                     switch(id)
                     {
-                        case R.id.today:
-                            Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();break;
+                        case R.id.interval:
+                            timePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                                }
+                            }, hour, minute, true);
+                            timePickerDialog.show();
+                            break;
                         default:
                             return true;
                     }

@@ -14,8 +14,8 @@
     <string name="the_day_after">day_after</string>
     <string name="open">open</string>
     <string name="close">close</string>
-    <string name="interval">Interval</string>
+    <string name="interval">Set Interval</string>
     <string name="developer">Developer: Yonas</string>
-    <string name="version">1.0</string>
+    <string name="version">Version: 1.0</string>
     <string name="settings">Settings</string>
 </resources>

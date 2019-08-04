@@ -34,7 +34,7 @@ public class Splash extends AppCompatActivity {
                 ProgressBar splashProgress = findViewById(R.id.splashProgress);
                 splashProgress.setVisibility(View.GONE);
             }
-        }, 3000);
+        }, 500);
 
     }
 }
