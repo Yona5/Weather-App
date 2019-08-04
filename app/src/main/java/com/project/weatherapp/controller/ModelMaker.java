@@ -7,6 +7,9 @@ import com.project.weatherapp.model.Weather;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//Yonas Tilahun Temesgen
+//ID: S1719046
+
 public class ModelMaker {
     ArrayList<HashMap<String, String>> weatherList;
     ArrayList<Weather> modelList = new ArrayList<>();

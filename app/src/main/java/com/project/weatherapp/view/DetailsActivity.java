@@ -1,15 +1,19 @@
-package com.project.weatherapp;
+package com.project.weatherapp.view;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
 
+import com.project.weatherapp.controller.DetailsAdapter;
+import com.project.weatherapp.R;
 import com.project.weatherapp.model.Weather;
 
 import java.util.ArrayList;
+
+//Yonas Tilahun Temesgen
+//ID: S1719046
 
 public class DetailsActivity extends Activity {
 

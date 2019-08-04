@@ -13,6 +13,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+//Yonas Tilahun Temesgen
+//ID: S1719046
+
 public class XMLParser extends AsyncTask<Void, Void, XmlPullParser> {
 
     public interface AsyncResponse{

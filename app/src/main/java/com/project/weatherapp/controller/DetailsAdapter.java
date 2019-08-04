@@ -1,8 +1,6 @@
-package com.project.weatherapp;
+package com.project.weatherapp.controller;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,8 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.project.weatherapp.R;
+
 import java.util.ArrayList;
 import java.util.List;
+
+//Yonas Tilahun Temesgen
+//ID: S1719046
 
 public class DetailsAdapter extends ArrayAdapter<String> {
 

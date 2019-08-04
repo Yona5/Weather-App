@@ -1,4 +1,4 @@
-package com.project.weatherapp;
+package com.project.weatherapp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+
+import com.project.weatherapp.R;
+
+//Yonas Tilahun Temesgen
+//ID: S1719046
 
 public class Splash extends AppCompatActivity {
     @Override

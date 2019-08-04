@@ -1,4 +1,4 @@
-package com.project.weatherapp;
+package com.project.weatherapp.controller;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,21 +13,27 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.project.weatherapp.R;
 import com.project.weatherapp.model.Weather;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+//Yonas Tilahun Temesgen
+//ID: S1719046
 
 public class WeatherAdapter extends ArrayAdapter<Weather> {
     private Context context;
     private List<Weather> weatherList;
+    private String date;
 
-    public WeatherAdapter(@NonNull Context context, ArrayList<Weather> weatherList){
+
+    public WeatherAdapter(@NonNull Context context, ArrayList<Weather> weatherList, String date){
         super(context, 0, weatherList);
         this.context = context;
         this.weatherList = weatherList;
+        this.date = date;
     }
     @NonNull
     @Override
@@ -40,6 +46,7 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
 
             Weather current_weather = getItem(position);
 
+            TextView dateTime = listItem.findViewById(R.id.dateTime);
             TextView weather_pre = listItem.findViewById(R.id.weather);
             TextView location = listItem.findViewById(R.id.locationName);
             TextView temperature = listItem.findViewById(R.id.temperature);
@@ -52,10 +59,16 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
             weather_pre.setText(current_weather.getWeather());
             location.setText(current_weather.getLocation());
             max_temp.setText(current_weather.getMax_temp() + "°" + " C");
-            min_temp.setText(current_weather.getMin_temp() + "°" + " C");
-            temperature.setText(current_weather.getMax_temp());
+            try {
+                int min = Integer.parseInt(current_weather.getMin_temp());
+                min_temp.setText(current_weather.getMin_temp() + "°" + " C");
+            } catch (NumberFormatException | NullPointerException nfe) {
+                min_temp.setText("N/A");
+            }
 
-//            Picasso.get().load(current_weather.getAvatar()).into(avatar);
+            temperature.setText(current_weather.getMax_temp());
+            dateTime.setText(this.date);
+
 
             String weather = current_weather.getWeather().toLowerCase();
             if(weather.contains("sunny")){

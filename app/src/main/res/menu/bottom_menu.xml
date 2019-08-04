@@ -5,18 +5,18 @@
         android:id="@+id/today"
         android:enabled="true"
         android:title="@string/today"
-        android:icon="@drawable/ic_star_black_24dp"
+        android:icon="@drawable/ic_today_black_24dp"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/tomorrow"
         android:enabled="true"
         android:title="@string/tomorrow"
-        android:icon="@drawable/ic_star_black_24dp"
+        android:icon="@drawable/ic_today_black_24dp"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/the_day_after"
         android:enabled="true"
         android:title="@string/the_day_after"
-        android:icon="@drawable/ic_star_black_24dp"
+        android:icon="@drawable/ic_today_black_24dp"
         app:showAsAction="ifRoom"/>
 </menu>

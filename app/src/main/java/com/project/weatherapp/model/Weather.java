@@ -2,6 +2,9 @@ package com.project.weatherapp.model;
 
 import java.io.Serializable;
 
+//Yonas Tilahun Temesgen
+//ID: S1719046
+
 public class Weather implements Serializable {
     //location (country)
     String location;
